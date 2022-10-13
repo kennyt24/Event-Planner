@@ -25,9 +25,9 @@ image : {
 },
 role: {
     type: String,
-    enumerable: ['user', 'admin'],
-    defaultValue: 'user',
-    allowNull: true,
+    enum: ['user', 'admin'],
+    default: 'user',
+    
   },
   email : {
     type: String,

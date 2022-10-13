@@ -12,8 +12,7 @@ const{
 
 router.post('/signup', UserSignup );
 router.post('/adminlogin', UserLogin);
-router.post('/create', upload.array('images', 12), AdminPostEvent);
+router.post('/postevent', upload.array('files', 12), AdminPostEvent);
  //router.get('/ViewEvent', FindAllEvents);
-
 
 module.exports = router;

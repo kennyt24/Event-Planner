@@ -17,6 +17,10 @@ const EventSchema = new mongoose.Schema({
         type: String,
     
       },
+      cloudinary_id:{
+        type: String,
+    
+      },
 
       is_available: {
         type: Boolean,

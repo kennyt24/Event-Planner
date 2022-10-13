@@ -47,45 +47,28 @@ exports.UserSignup = async (req, res) => {
     }
   };
 
-  exports.AdminPostEvent = async (req, res) =>{
-    try {
-        const {Eventtitle, Location, TicketPrice, EventImage, is_available } =
-        req.body;
-        // // validate request
-        // if(!Eventtitle ||  !Location || !description || !TicketPrice ||) {
-        //     res.status(400).send({
-        //         message: 'Content can not be empty!',
-        //       });
-        //       return;
-        //     }
-        //     const user = await User.findOne({ where: { id: req.user.id } });
-        //     if (!user) {
-        //       return res.status(404).json({ message: 'User not found' });
-        //     }
 
-        //Authorization 
-            // if (user.role !== 'admin') {
-            //   return res
-            //     .status(403)
-            //     .json({ message: 'Not authorized to perform this role' });
-            // }
-            // upload array of images to cloudinary and get the urls
-        
+
+  
+  exports.AdminPostEvent = async (req, res) =>{
+    const {Eventtitle, Location, TicketPrice, EventImage, is_available } =
+    req.body;
+    try {
+        console.log(req.body);
+    
             const images = [];
             for (let i = 0; i < req.files.length; i++) {
               const result = await cloudinary.uploader.upload(req.files[i].path);
               images.push(result.secure_url);
               console.log('=============== uploading image ========================');
             }
+            // console.log(req.body);
+            const newEvent = await Events.create ({ Eventtitle, Location, TicketPrice, EventImage, is_available
 
-            const Event = await Events.create({
-                Eventtitle, 
-                Location,
-                TicketPrice, 
-                EventImage : images,
-                is_available,
-            });
-            return res.status(201).json({ newEvents });
+            })
+
+              
+            return res.status(201).json({ newEvent });
 
 
     } catch (error) {
@@ -93,15 +76,21 @@ exports.UserSignup = async (req, res) => {
     }
   }
 
+
+
+
+
+
   // To get all events
-exports.FindAllEvents =(req,res)=>{
-    try {
-        // pagination of 10per time of 25 data
-           const package =Package.findAll()
-           res.send(package);
-    } catch (err) {
+  exports.FindAllEvents = async (req, res) => {
+    // pagination of 10per time of 25 data
+    const events = await Events.find().limit(2)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
         res.status(500).send({
-            message:err.message});
-        
-    }
-};
+          message: err.message,
+        });
+      });
+  };

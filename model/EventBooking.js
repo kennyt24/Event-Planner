@@ -3,16 +3,15 @@ const BookingSchema = new mongoose.Schema({
         type: String,
       },
 
-      userId: {
+      Event_id: {
         type: String,
 
       },
 
-      userId: {
-        type: String,
+      total_price: {
+        type: Number,
 
       },
-
 
 },
 {
